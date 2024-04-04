@@ -1,3 +1,7 @@
 CreateClassMap.py
 ymydata.py
 __pycache__
+latextemplate.aux
+latextemplate.log
+latextemplate.pdf
+
