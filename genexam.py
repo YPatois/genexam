@@ -8,14 +8,15 @@ OUTDIR="./outdir"
 
 
 def item2fn(item):
-    n=item.lower().replace(' ','_').replace('-','_')
+    return item.lower().replace(' ','_').replace('-','_')
 
 def eleve2filename(e):
+    return item2fn(e.nom)+'_'+item2fn(e.prenom)
 
 
 def generates_student_file(e):
-    os.mkdir(OUTDIR)
-    fn=item2fn(e.nom)+'_'+item2fn(e.prenom)+'.txt'
+    #os.mkdir(OUTDIR)
+    fn=eleve2filename(e)+'.txt'
     fn=os.path.join(OUTDIR,fn)
     print(fn)
 
