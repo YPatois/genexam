@@ -1,0 +1,2 @@
+# genexam
+Generates exams
