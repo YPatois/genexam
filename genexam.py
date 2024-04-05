@@ -11,14 +11,16 @@ def item2fn(item):
     return item.lower().replace(' ','_').replace('-','_')
 
 def eleve2filename(e):
-    return os.path.join(OUTDIR,item2fn(e.nom)+'_'+item2fn(e.prenom)+".txt")
+    return os.path.join(OUTDIR,item2fn(e.nom)+'_'+item2fn(e.prenom)+".tex")
 
 
 def generates_student_file(e):
-    s=e.prenom+" "+e.nom
-    f=open(eleve2filename(e),"wt")
-    f.write(s)
-    f.close()
+    fi=open("latextemplate.tex","rt")
+    fo=open(eleve2filename(e),"wt")
+    for line in fi.readlines():
+        fo.write(line)
+    fo.close()
+    fi.close()
 
 
 # --------------------------------------------------------------------------
