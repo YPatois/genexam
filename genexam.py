@@ -1,5 +1,6 @@
 #!/usr/bin/env python3
 import os
+import random
 
 from ymydata import lesclasses
 from CreateClassMap import LesClasses
@@ -14,18 +15,35 @@ def eleve2filename(e):
     return os.path.join(OUTDIR,item2fn(e.nom)+'_'+item2fn(e.prenom)+".tex")
 
 
+def replace_braces(s):
+    s=s.replace('@','{')
+    s=s.replace('£','}')
+    return s
+
+def build_l(idx):
+    clist=[ 10*i for i in range(1,10)]
+    i=random.choice(clist)
+    s="$@i_{}=\SI@{}£@\mA££$".format(idx,i)
+    s=replace_braces(s)
+    return (i,s)
+
 def problem_stuffing():
-    ia="${i_1=\SI{40}{\mA}}$"
-    ib="${i_1=\SI{20}{\mA}}$"
-    ic="${i_1=\SI{20}{\mA}}$"
-    return (ia,ib,ic)
+    (i2,s2)=build_l(2)
+    (i3,s3)=build_l(3)
+    i1=i2+i3
+    
+    ia="${i_1}$"
+    ib=s2
+    ic=s3
+    solstring=""
+    return (ia,ib,ic,solstring)
 
 
 def generates_student_file(e):
     cl=e.cid.split('_')
     fi=open("latextemplate.tex","rt")
     fo=open(eleve2filename(e),"wt")
-    (ia,ib,ic)=problem_stuffing()
+    (ia,ib,ic,sl)=problem_stuffing()
     for line in fi.readlines():
         line=line.replace("@PRENOM@",e.prenom)
         line=line.replace("@NOM@",e.nom)
