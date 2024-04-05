@@ -15,9 +15,14 @@ def eleve2filename(e):
 
 
 def generates_student_file(e):
+    cl=e.cid.split('_')
     fi=open("latextemplate.tex","rt")
     fo=open(eleve2filename(e),"wt")
     for line in fi.readlines():
+        line=line.replace("@PRENOM@",e.prenom)
+        line=line.replace("@NOM@",e.nom)
+        line=line.replace("@CLASS@",cl[0])
+        line=line.replace("@CLNB@",cl[1])
         fo.write(line)
     fo.close()
     fi.close()
