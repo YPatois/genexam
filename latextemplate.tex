@@ -1,5 +1,5 @@
 \documentclass{article}
-\usepackage[a4paper, margin=1cm]{geometry}
+\usepackage[a4paper, margin=2cm]{geometry}
 
 \usepackage{circuitikz}
 \usepackage[french]{babel}
@@ -9,13 +9,15 @@
 \usepackage{siunitx}
 \usepackage{wrapfig}
 
+\setlength{\parindent}{0pt}
+
+
 \begin{document}
 
 {\large \textbf{Petit exercice pour @Prenom@ @Nom@}}
+\hfill
 
-%% \title{Petit exercice}
-%% \maketitle
-\begin{wrapfigure}{l}{0.25\textwidth}   
+\begin{wrapfigure}{l}{0.3\textwidth}
 \begin{circuitikz}[european]
  \draw (0,0)
  to [american voltage source, invert, o-o] (0,3)
