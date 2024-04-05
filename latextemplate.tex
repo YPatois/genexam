@@ -21,10 +21,10 @@
 \begin{circuitikz}[european]
  \draw (0,0)
  to [american voltage source, invert, o-o] (0,3)
- to [short, -*, i>^=${i_1=\SI{20}{\mA}}$] (2,3)
- to [R=$R$, i_>=${i_2=\SI{20}{\mA}}$] (2,0) -- (0,0);
+ to [short, -*, i>^=@IA@] (2,3)
+ to [R=$R$, i_>=@IB@] (2,0) -- (0,0);
  \draw (2,3) -- (4,3)
- to [lamp=$L$, i>_=${i_3=\SI{20}{\mA}}$]
+ to [lamp=$L$, i>_=@IC@]
 (4,0) to[short, -*] (2,0);
 \end{circuitikz}
 \end{wrapfigure}
