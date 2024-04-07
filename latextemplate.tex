@@ -1,5 +1,6 @@
-\documentclass{article}
-\usepackage[a4paper, margin=2cm]{geometry}
+\documentclass[11pt] {article}
+\usepackage[paperheight=6.9cm,paperwidth=21cm,hmargin=2cm,vmargin=1cm]{geometry}
+\usepackage{titleps}
 
 \usepackage{circuitikz}
 \usepackage[french]{babel}
@@ -9,15 +10,22 @@
 \usepackage{siunitx}
 \usepackage{wrapfig}
 
-\setlength{\parindent}{0pt}
+\newpagestyle{ruled} {
+  \sethead{}{}{}\headrule
+  \setfoot{}{}{}\footrule
+}
 
+\pagestyle{ruled}
+
+\setlength{\parindent}{0pt}
 
 \begin{document}
 
-{\large \textbf{@CLASS@°@CLNB@ Petit exercice pour @PRENOM@ @NOM@}}
-\hfill
+%\thispagestyle{empty}
 
-\begin{wrapfigure}{l}{0.3\textwidth}
+{\large \textbf{@CLASS@°@CLNB@ Petit exercice pour @PRENOM@ @NOM@}}
+
+\begin{wrapfigure}{l}{0.35\textwidth}
 \begin{circuitikz}[european]
  \draw (0,0)
  to [american voltage source, invert, o-o] (0,3)
@@ -28,8 +36,11 @@
 (4,0) to[short, -*] (2,0);
 \end{circuitikz}
 \end{wrapfigure}
+\hfill
 
 En utilisant les indications du schéma sur la gauche (le dipole doté d'un "+/-" est un générateur de tension), rapellez la relation entre $i_1$, $i_2$ et $i_3$ (attention au sens des flèches!):
+
+\hfill
 
 Calculez $i_1$: 
 
