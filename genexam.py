@@ -31,11 +31,10 @@ def problem_stuffing():
     (i2,s2)=build_l(2)
     (i3,s3)=build_l(3)
     i1=i2+i3
-    
     ia="${i_1}$"
     ib=s2
     ic=s3
-    solstring=""
+    solstring=str(i1)
     return (ia,ib,ic,solstring)
 
 
@@ -52,6 +51,7 @@ def generates_student_file(e):
         line=line.replace("@IA@",ia)
         line=line.replace("@IB@",ib)
         line=line.replace("@IC@",ic)
+        line=line.replace("@SOLSTRING@",sl)
         fo.write(line)
     fo.close()
     fi.close()
