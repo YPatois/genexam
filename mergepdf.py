@@ -22,8 +22,8 @@ def print_list(pl):
     for p in pl:
         #p=p.replace(OUTDIR,"")
         if (n<4):
-            s1+=p+',1,'
-            s2+=p+',2,'
+            s1+=p+',1,\n'
+            s2+=p+',2,\n'
         n+=1
         if (n==4):
             s+=s1+s2
