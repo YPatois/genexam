@@ -1,6 +1,7 @@
 \documentclass[11pt] {article}
 \usepackage[paperheight=6.9cm,paperwidth=21cm,hmargin=2cm,vmargin=1cm]{geometry}
 \usepackage{titleps}
+\usepackage[absolute]{textpos}
 
 \usepackage{circuitikz}
 \usepackage[french]{babel}
@@ -19,7 +20,10 @@
 
 \setlength{\parindent}{0pt}
 
+\TPGrid[1cm,1cm]{5}{5}
+
 \begin{document}
+%\TPShowGrid{5}{5}
 
 %\thispagestyle{empty}
 
@@ -46,7 +50,10 @@ Calculez $i_1$:
 
 \hfill
 
-@SOLSTRING@
+
+\begin{textblock}{1}(2,5)
+    \texttt{\tiny Serial Number: @SOLSTRING@}
+\end{textblock}
 
 \pagebreak
 
