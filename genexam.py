@@ -31,7 +31,7 @@ def replace_braces(s):
     return s
 
 def build_lmA(idx):
-    clist=[ 10*i for i in range(1,10)]
+    clist=[ 20*i for i in range(1,10)]
     i=random.choice(clist)
     s="$@i_{}=\SI@{}£@\mA££$".format(idx,i)
     s=replace_braces(s)
@@ -53,17 +53,19 @@ def problem_stuffing_basic():
     ib=s2
     ic=s3
     solstring=get_random_string(5)+str(i1)+get_random_string(5)
-    return (ia,ib,ic,solstring)
+    si="to [lamp=$L_2$, i>_=@IC@] (4,0) to[short, -*] (2,0);"
+    return (si,ia,ib,ic,solstring)
 
 def problem_stuffing_higher():
     (i2,s2)=build_lmA(2)
     (i3,s3)=build_lA(3)
-    i1=i2+i3
+    i1=(i2+i3*1000)/1000
     ia="${i_1}$"
     ib=s2
     ic=s3
-    solstring=get_random_string(5)+str(i1)+get_random_string(5)
-    return (ia,ib,ic,solstring)
+    solstring=get_random_string(5)+str(i1).replace('.','')+get_random_string(5)
+    si="to [Telmech=$M$] (4,0) to[short, -*, i>_=@IC@] (2,0);"
+    return (si,ia,ib,ic,solstring)
 
 
 def problem_stuffing(level):
@@ -76,7 +78,7 @@ def generates_student_file(e):
     cl=e.cid.split('_')
     fi=open("latextemplate.tex","rt")
     fo=open(eleve2filename(e),"wt")
-    (ia,ib,ic,sl)=problem_stuffing(e.phynote)
+    (si,ia,ib,ic,sl)=problem_stuffing(e.phynote)
     for line in fi.readlines():
         line=line.replace("@PRENOM@",e.prenom)
         line=line.replace("@NOM@",e.nom)
@@ -84,6 +86,7 @@ def generates_student_file(e):
         line=line.replace("@CLNB@",cl[1])
         line=line.replace("@IA@",ia)
         line=line.replace("@IB@",ib)
+        line=line.replace("@SECOND_ITEM@",si)
         line=line.replace("@IC@",ic)
         line=line.replace("@SOLSTRING@",sl)
         fo.write(line)
