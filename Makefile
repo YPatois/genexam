@@ -10,6 +10,9 @@ outdir/tex/%.tex: genexam.py latextemplate.tex Makefile
 outdir/pdf/%.pdf: outdir/tex/%.tex
 	pdflatex -output-directory outdir/pdf/ $<
 
-outdir/out.pdf: $(PDFS)
-	pdfjam outdir/pdf/*.pdf --a4paper  --nup 1x4 --outfile $@
+outdir/out.tex: $(PDFS) mergepdf.py mergetemplate.tex
+	./mergepdf.py
+
+outdir/out.pdf: outdir/out.tex
+	pdflatex -output-directory outdir/ $<
 
