@@ -5,7 +5,7 @@ import random
 from ymydata import lesclasses
 from CreateClassMap import LesClasses
 
-OUTDIR="./outdir"
+OUTDIR="./outdir/tex"
 
 
 def item2fn(item):
