@@ -1,6 +1,7 @@
 #!/usr/bin/env python3
 import os
 import random
+import unicodedata
 
 from ymydata import lesclasses
 from CreateClassMap import LesClasses
@@ -9,6 +10,7 @@ OUTDIR="./outdir/tex"
 
 
 def item2fn(item):
+    item=unicodedata.normalize('NFKD', item).encode('ascii', 'ignore').decode('ascii')
     return item.lower().replace(' ','_').replace('-','_')
 
 def eleve2filename(e):
