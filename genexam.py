@@ -1,4 +1,5 @@
 #!/usr/bin/env python3
+import string
 import os
 import random
 import unicodedata
@@ -7,6 +8,13 @@ from ymydata import lesclasses
 from CreateClassMap import LesClasses
 
 OUTDIR="./outdir/tex"
+
+
+def get_random_string(length):
+    # choose from all lowercase letter
+    letters = string.ascii_lowercase+string.digits
+    result_str = ''.join(random.choice(letters) for i in range(length))
+    return result_str
 
 
 def item2fn(item):
@@ -36,7 +44,7 @@ def problem_stuffing():
     ia="${i_1}$"
     ib=s2
     ic=s3
-    solstring=str(i1)
+    solstring=get_random_string(5)+str(i1)+get_random_string(5)
     return (ia,ib,ic,solstring)
 
 
