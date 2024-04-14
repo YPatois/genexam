@@ -16,3 +16,6 @@ outdir/out.tex: $(PDFS) mergepdf.py mergetemplate.tex
 outdir/out.pdf: outdir/out.tex
 	pdflatex -output-directory outdir/ $<
 
+clean:
+	/bin/rm outdir/pdf/*.pdf
+	/bin/rm outdir/tex/*.tex
