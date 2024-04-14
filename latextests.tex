@@ -1,0 +1,116 @@
+\documentclass[11pt] {article}
+\usepackage[paperheight=6.9cm,paperwidth=21cm,hmargin=2cm,vmargin=1cm]{geometry}
+\usepackage{titleps}
+\usepackage[absolute]{textpos}
+\usepackage{xfp}
+\usepackage{WriteOnGrid}
+
+\usepackage{circuitikz}
+\usepackage[french]{babel}
+%%\usepackage[autolanguage]{numprint}
+\usetikzlibrary{babel} 
+
+\usepackage{siunitx}
+\usepackage{wrapfig}
+
+\newpagestyle{ruled} {
+  \sethead{}{}{}\headrule
+  \setfoot{}{}{}\footrule
+}
+
+\pagestyle{ruled}
+
+\setlength{\parindent}{0pt}
+
+\TPGrid[1cm,1cm]{5}{5}
+
+\begin{document}
+%\TPShowGrid{5}{5}
+
+%\thispagestyle{empty}
+
+{\large \textbf{Classe: @CLASS@°@CLNB@ -- Petit exercice pour @PRENOM@ @NOM@}}
+
+\begin{wrapfigure}{l}{0.35\textwidth}
+\scriptsize
+\begin{circuitikz}[european]
+ \draw (0,0) -- (4,0);
+ \draw (0,3) -- (4,3);
+
+ \draw (0,0)
+ to [american voltage source, invert, i_>=@IA@, o-o] (0,3);
+ \draw (2,0)
+ to [lamp=A, i<_=@IB@, o-o]  (2,3);
+ \draw (4,0)
+ to [lamp=B, i^<=@IC@, o-o]  (4,3);
+\end{circuitikz}
+
+\end{wrapfigure}
+
+En utilisant les indications du schéma sur la gauche (le dipole doté d'un "+/-" est un générateur de tension), rapellez la relation entre $i_1$, $i_2$ et $i_3$:
+\begin{flushright}
+\begin{EnvQuadrillage}[NbCarreaux=14x1,Grille=Seyes,Marge=1]
+\end{EnvQuadrillage}
+\end{flushright}
+
+Calculez $i_1$: 
+\begin{flushright}
+\begin{EnvQuadrillage}[NbCarreaux=14x1,Grille=Seyes,Marge=1]
+\end{EnvQuadrillage}
+\end{flushright}
+
+
+\begin{textblock}{1}(2,5)
+    \texttt{\tiny Serial Number: @SOLSTRING@}
+\end{textblock}
+
+\pagebreak
+
+{\large \textbf{Classe: @CLASS@°@CLNB@ -- Petit exercice pour @PRENOM@ @NOM@}}
+
+\begin{wrapfigure}{l}{0.35\textwidth}
+\scriptsize
+\begin{circuitikz}[european]
+ \draw (0,0)
+ to [american voltage source, invert, o-o] (0,3)
+ to [short, -*, i>^=@IA@] (2,3)
+ to [lamp=$L_1$, i>_=@IB@] (2,0) -- (0,0);
+ \draw (2,3) -- (4,3)
+ to [Telmech=$M$] (4,0) to[short, -*, i>_=@IC@] (2,0);
+\end{circuitikz}
+
+\end{wrapfigure}
+
+En utilisant les indications du schéma sur la gauche (le dipole doté d'un "+/-" est un générateur de tension), rapellez la relation entre $i_1$, $i_2$ et $i_3$:
+\begin{flushright}
+\begin{EnvQuadrillage}[NbCarreaux=14x1,Grille=Seyes,Marge=1]
+\end{EnvQuadrillage}
+\end{flushright}
+
+Calculez $i_1$:
+\begin{flushright}
+\begin{EnvQuadrillage}[NbCarreaux=14x1,Grille=Seyes,Marge=1]
+\end{EnvQuadrillage}
+\end{flushright}
+
+
+\begin{textblock}{1}(2,5)
+    \texttt{\tiny Serial Number: @SOLSTRING@}
+\end{textblock}
+
+\pagebreak
+
+
+\thispagestyle{empty}
+
+{\large \textbf{Classe de @CLASS@°@CLNB@}}
+\hfill
+
+{\Large \textbf{Petit exercice pour}}
+\hfill
+
+\begin{center}
+{\Huge \textbf{@PRENOM@ @NOM@}}
+\end{center}
+
+\end{document}
