@@ -69,6 +69,7 @@ def problem_stuffing_higher():
 
 
 def problem_stuffing(level):
+    level=int(level)
     if (level<11):
         return problem_stuffing_basic()
     else:
@@ -100,7 +101,7 @@ def generates_student_file(e):
 def main():
     random.seed(10)
     lc=LesClasses(lesclasses,False)
-    cid="4_4"
+    cid="4_5"
     a_class=lc.getClasse(cid)
     for e in a_class.eleves:
         generates_student_file(e)
