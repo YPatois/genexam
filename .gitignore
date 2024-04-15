@@ -4,5 +4,8 @@ __pycache__
 latextemplate.aux
 latextemplate.log
 latextemplate.pdf
+latextests.aux
+latextests.log
+latextests.pdf
 outdir
 
