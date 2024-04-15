@@ -95,7 +95,7 @@ class Motor(Componant):
 
     def circuitikz(self,p):
         if (not self.ukn):
-            istr=self.i_label+"=\SI{"+str(self.I)+"}{\mA}"
+            istr=self.i_label+"=\SI{"+str(self.I/1000)+"}{\A}"
         else:
             istr=self.i_label
         s1="rmeter, t={\\textbf M}, "
@@ -144,7 +144,7 @@ class Circuit:
             #sl.append(x2)
             if (c.ukn):
                 s=get_random_string(5)+str(c.I)+get_random_string(5)
-                s=str(c.I)
+                #s=str(c.I)
                 il=c.i_label
         return (sl[0],sl[1],sl[2],il,s)
 
@@ -268,7 +268,8 @@ class TestCircuit(unittest.TestCase):
 # Welcome to Derry, Maine
 # --------------------------------------------------------------------------
 def main():
-    #random.seed(10)
+    random.seed(10)
+
     #unittest.main()
     #return
     #G=Generator()
