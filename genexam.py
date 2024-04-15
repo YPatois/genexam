@@ -127,7 +127,8 @@ class Circuit:
             sl.append(x1)
             sl.append(x2)
             if (c.ukn):
-                s=solstring=get_random_string(5)+str(c.I)+get_random_string(5)
+                s=get_random_string(5)+str(c.I)+get_random_string(5)
+                s=str(c.I)
         return (sl[0],sl[1],sl[2],sl[3],sl[4],sl[5],s)
 
     def sum_I(self):
@@ -218,31 +219,41 @@ def generates_student_file(e):
         line=line.replace("@CLNB@",cl[1])
         line=line.replace("@A1@",a1)
         line=line.replace("@A2@",a2)
-        line=line.replace("@B1@",a1)
-        line=line.replace("@B2@",a2)
-        line=line.replace("@C1@",a1)
-        line=line.replace("@C2@",a2)
+        line=line.replace("@B1@",b1)
+        line=line.replace("@B2@",b2)
+        line=line.replace("@C1@",c1)
+        line=line.replace("@C2@",c2)
         line=line.replace("@SOLSTRING@",sl)
         fo.write(line)
     fo.close()
     fi.close()
 
 class TestCircuit(unittest.TestCase):
-    def test_circuit(self):
+    def test_circuit_zero(self):
         for l in [10,12,14,16]:
             c=Circuit(l)
             self.assertEqual(c.sum_I(),0)
 
+    def test_circuit_zero_deeper(self):
         for i in range(100):
             c=Circuit(16)
             self.assertEqual(c.no_negative(),True)
 
+    def test_circuit_has_generator(self):
+        l=[10,12,14,16]
+        for i in range(100):
+            has_gen=False
+            c=Circuit(random.choice(l))
+            for c in c.components:
+                if (type(c)==Generator):
+                    has_gen=True
+            self.assertEqual(has_gen,True)
 
 # --------------------------------------------------------------------------
 # Welcome to Derry, Maine
 # --------------------------------------------------------------------------
 def main():
-    random.seed(10)
+    #random.seed(10)
     #unittest.main()
     #return
     #G=Generator()
@@ -256,6 +267,7 @@ def main():
     a_class=lc.getClasse(cid)
     for e in a_class.eleves:
         generates_student_file(e)
+        #return
 
 # --------------------------------------------------------------------------
 if __name__ == '__main__':
