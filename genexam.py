@@ -66,7 +66,7 @@ class Lamp(Componant):
             istr=self.i_label+"=\SI{"+str(self.I)+"}{\mA}"
         else:
             istr=self.i_label
-        s1="Lamp=$L_"+str(self.idx)+"$"
+        s1="lamp=$L_"+str(self.idx)+"$"
         s2="${"+istr+"}$"
         return (s1,s2)
 
@@ -218,10 +218,10 @@ def generates_student_file(e):
         line=line.replace("@CLNB@",cl[1])
         line=line.replace("@A1@",a1)
         line=line.replace("@A2@",a2)
-        line=line.replace("@b1@",a1)
-        line=line.replace("@b2@",a2)
-        line=line.replace("@c1@",a1)
-        line=line.replace("@c2@",a2)
+        line=line.replace("@B1@",a1)
+        line=line.replace("@B2@",a2)
+        line=line.replace("@C1@",a1)
+        line=line.replace("@C2@",a2)
         line=line.replace("@SOLSTRING@",sl)
         fo.write(line)
     fo.close()
