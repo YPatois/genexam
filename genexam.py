@@ -13,12 +13,19 @@ OUTDIR="./outdir/tex"
 class Componant:
     def __init__(self):
         self.I=0
+        self.ukn=False
 
     def compute_intensity(self,cpn):
         s=0
         for c in cpn:
             s+=c.I
         self.I=-s
+
+    def set_i_label(self,il):
+        self.i_label=il
+
+    def set_ukn(self):
+        self.ukn=True
 
     def no_negative(self):
         return (self.I>0)
@@ -34,13 +41,35 @@ class Generator(Componant):
     def no_negative(self):
         return (self.I<0)
 
+    def circuitikz(self):
+        if (not self.ukn):
+            istr=self.i_label+"=\SI{"+str(-self.I/1000)+"}{\A}"
+        else:
+            istr=self.i_label
+        s1="[american voltage source, invert, "
+        S2="${"+istr+"}$, o-o]"
+        return (s1,s2)
+
 class Lamp(Componant):
+    lidx=0
     def __init__(self):
+        self.idx=Lamp.lidx
+        Lamp.lidx+=1
         super().__init__()
 
     def set_intensity(self):
         clist=[ 20*i for i in range(1,10)]
         self.I=random.choice(clist)
+
+    def circuitikz(self):
+        if (not self.ukn):
+            istr=self.i_label+"=\SI{"+str(self.I)+"}{\mA}"
+        else:
+            istr=self.i_label
+        s1="[Lamp=$L_"+str(self.idx)+"$"
+        s2="${"+istr+"}$"
+        return (s1,s2)
+
 
 class Motor(Componant):
     def __init__(self):
@@ -49,6 +78,15 @@ class Motor(Componant):
     def set_intensity(self):
         clist=[ 1000+200*i for i in range(1,19)]
         self.I=random.choice(clist)
+
+    def circuitikz(self):
+        if (not self.ukn):
+            istr=self.i_label+"=\SI{"+str(self.I)+"}{\mA}"
+        else:
+            istr=self.i_label
+        s1="[Telmech=$M$]"
+        s2="${"+istr+"}$"
+        return (s1,s2)
 
 class Circuit:
     def __init__(self,level):
@@ -66,14 +104,23 @@ class Circuit:
             self.components=([Generator(),Lamp(),Motor()])
             random.shuffle(self.components)
             ukn=random.randint(0, 2)
-        labels=random.shuffle(["I_1","I_2","I_3"])
+        i_label=["I_1","I_2","I_3"]
+        random.shuffle(i_label)
         for i in range(3):
-            if (i!=ukn):
-                self.components[i].set_intensity()
-        self.components[ukn].compute_intensity(self.components)
+            self.components[i].set_i_label(i_label[i])
+            if (ukn==i):
+                self.components[i].set_ukn()
+        s=0
+        for c in self.components:
+            if (type(c)!=Generator):
+                c.set_intensity()
+                s+=c.I
 
-        #for c in self.components:
-        #    c.fix_negative(self.components)
+        for c in self.components:
+            if (type(c)==Generator):
+                c.I=-s
+
+
 
     def sum_I(self):
         s=0
@@ -178,8 +225,6 @@ class TestCircuit(unittest.TestCase):
         for i in range(100):
             c=Circuit(16)
             self.assertEqual(c.no_negative(),True)
-
-
 
 
 # --------------------------------------------------------------------------
