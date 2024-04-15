@@ -13,8 +13,11 @@ outdir/pdf/%.pdf: outdir/tex/%.tex
 outdir/out.tex: $(PDFS) mergepdf.py mergetemplate.tex
 	./mergepdf.py
 
-outdir/out.pdf: outdir/out.tex
+outdir/out.pdf: outdir/out.tex outdir
 	pdflatex -output-directory outdir/ $<
+
+outdir:
+	mkdir outdir
 
 clean:
 	/bin/rm outdir/pdf/*.pdf
