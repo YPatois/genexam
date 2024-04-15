@@ -84,7 +84,7 @@ class Motor(Componant):
             istr=self.i_label+"=\SI{"+str(self.I)+"}{\mA}"
         else:
             istr=self.i_label
-        s1="Telmech=$M$"
+        s1="rmeter, t={\\textbf M}"
         s2="${"+istr+"}$"
         return (s1,s2)
 
