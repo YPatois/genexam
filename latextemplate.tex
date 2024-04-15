@@ -34,17 +34,20 @@
 \begin{wrapfigure}{l}{0.35\textwidth}
 \scriptsize
 \begin{circuitikz}[european]
+ \draw (0,0) -- (4,0);
+ \draw (0,3) -- (4,3);
+
  \draw (0,0)
- to [american voltage source, invert, o-o] (0,3)
- to [short, -*, i>^=@IA@] (2,3)
- to [lamp=$L_1$, i>_=@IB@] (2,0) -- (0,0);
- \draw (2,3) -- (4,3)
- @SECOND_ITEM@
+ to [ @A1@, i_>=@A2@, o-o] (0,3);
+ \draw (2,0)
+ to [ @B1@, i<_=@B2@, o-o]  (2,3);
+ \draw (4,0)
+ to [ @C1@, i^<=@C2@, o-o]  (4,3);
 \end{circuitikz}
 
 \end{wrapfigure}
 
-En utilisant les indications du schéma sur la gauche (le dipole doté d'un "+/-" est un générateur de tension), rapellez la relation entre $i_1$, $i_2$ et $i_3$:
+En utilisant les indications du schéma sur la gauche (le dipole doté d'un "+/-" est un générateur de tension), rapellez la relation entre $i_1$, $i_2$ et $i_3$ (attention aux indices!):
 \begin{flushright}
 \begin{EnvQuadrillage}[NbCarreaux=14x1,Grille=Seyes,Marge=1]
 \end{EnvQuadrillage}

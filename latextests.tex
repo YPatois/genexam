@@ -38,11 +38,11 @@
  \draw (0,3) -- (4,3);
 
  \draw (0,0)
- to [american voltage source, invert, i_>=@IA@, o-o] (0,3);
+ to [ @A1@, i_>=@A2@, o-o] (0,3);
  \draw (2,0)
- to [lamp=A, i<_=@IB@, o-o]  (2,3);
+ to [ @B1@, i<_=@B2@, o-o]  (2,3);
  \draw (4,0)
- to [lamp=B, i^<=@IC@, o-o]  (4,3);
+ to [ @C1@, i^<=@C2@, o-o]  (4,3);
 \end{circuitikz}
 
 \end{wrapfigure}

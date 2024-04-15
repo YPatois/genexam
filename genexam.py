@@ -46,8 +46,8 @@ class Generator(Componant):
             istr=self.i_label+"=\SI{"+str(-self.I/1000)+"}{\A}"
         else:
             istr=self.i_label
-        s1="[american voltage source, invert, "
-        S2="${"+istr+"}$, o-o]"
+        s1="american voltage source, invert, "
+        s2="${"+istr+"}$"
         return (s1,s2)
 
 class Lamp(Componant):
@@ -66,7 +66,7 @@ class Lamp(Componant):
             istr=self.i_label+"=\SI{"+str(self.I)+"}{\mA}"
         else:
             istr=self.i_label
-        s1="[Lamp=$L_"+str(self.idx)+"$"
+        s1="Lamp=$L_"+str(self.idx)+"$"
         s2="${"+istr+"}$"
         return (s1,s2)
 
@@ -84,7 +84,7 @@ class Motor(Componant):
             istr=self.i_label+"=\SI{"+str(self.I)+"}{\mA}"
         else:
             istr=self.i_label
-        s1="[Telmech=$M$]"
+        s1="Telmech=$M$"
         s2="${"+istr+"}$"
         return (s1,s2)
 
@@ -120,7 +120,15 @@ class Circuit:
             if (type(c)==Generator):
                 c.I=-s
 
-
+    def circuitikz(self):
+        sl=[]
+        for c in self.components:
+            (x1,x2)=c.circuitikz()
+            sl.append(x1)
+            sl.append(x2)
+            if (c.ukn):
+                s=solstring=get_random_string(5)+str(c.I)+get_random_string(5)
+        return (sl[0],sl[1],sl[2],sl[3],sl[4],sl[5],s)
 
     def sum_I(self):
         s=0
@@ -201,16 +209,19 @@ def generates_student_file(e):
     cl=e.cid.split('_')
     fi=open("latextemplate.tex","rt")
     fo=open(eleve2filename(e),"wt")
-    (si,ia,ib,ic,sl)=problem_stuffing(e.phynote)
+    c=Circuit(e.phynote)
+    (a1,a2,b1,b2,c1,c2,sl)=c.circuitikz()
     for line in fi.readlines():
         line=line.replace("@PRENOM@",e.prenom)
         line=line.replace("@NOM@",e.nom)
         line=line.replace("@CLASS@",cl[0])
         line=line.replace("@CLNB@",cl[1])
-        line=line.replace("@IA@",ia)
-        line=line.replace("@IB@",ib)
-        line=line.replace("@SECOND_ITEM@",si)
-        line=line.replace("@IC@",ic)
+        line=line.replace("@A1@",a1)
+        line=line.replace("@A2@",a2)
+        line=line.replace("@b1@",a1)
+        line=line.replace("@b2@",a2)
+        line=line.replace("@c1@",a1)
+        line=line.replace("@c2@",a2)
         line=line.replace("@SOLSTRING@",sl)
         fo.write(line)
     fo.close()
@@ -232,16 +243,16 @@ class TestCircuit(unittest.TestCase):
 # --------------------------------------------------------------------------
 def main():
     random.seed(10)
-    unittest.main()
-    return
-    G=Generator()
-    for i in range(30):
-        G.set_intensity()
-        print(G.I)
-    return
+    #unittest.main()
+    #return
+    #G=Generator()
+    #for i in range(30):
+    #    G.set_intensity()
+    #    print(G.I)
+    #return
 
     lc=LesClasses(lesclasses,False)
-    cid="4_5"
+    cid="4_3"
     a_class=lc.getClasse(cid)
     for e in a_class.eleves:
         generates_student_file(e)
