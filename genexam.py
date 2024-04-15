@@ -30,6 +30,17 @@ class Componant:
     def no_negative(self):
         return (self.I>0)
 
+    def arrow(self):
+        return ("<")
+
+
+    def iblock(self,p):
+        if (p==0):
+            return "i_"+self.arrow()+"="
+        if (p==1):
+            return "i"+self.arrow()+"_="
+        return "i^"+self.arrow()+"="
+
 class Generator(Componant):
     def __init__(self):
         super().__init__()
@@ -41,14 +52,17 @@ class Generator(Componant):
     def no_negative(self):
         return (self.I<0)
 
-    def circuitikz(self):
+    def arrow(self):
+        return (">")
+
+    def circuitikz(self,p):
         if (not self.ukn):
             istr=self.i_label+"=\SI{"+str(-self.I/1000)+"}{\A}"
         else:
             istr=self.i_label
         s1="american voltage source, invert, "
-        s2="${"+istr+"}$"
-        return (s1,s2)
+        s2=self.iblock(p)+"${"+istr+"}$"
+        return (s1+s2)
 
 class Lamp(Componant):
     lidx=0
@@ -61,14 +75,14 @@ class Lamp(Componant):
         clist=[ 20*i for i in range(1,10)]
         self.I=random.choice(clist)
 
-    def circuitikz(self):
+    def circuitikz(self,p):
         if (not self.ukn):
             istr=self.i_label+"=\SI{"+str(self.I)+"}{\mA}"
         else:
             istr=self.i_label
-        s1="lamp=$L_"+str(self.idx)+"$"
-        s2="${"+istr+"}$"
-        return (s1,s2)
+        s1="lamp=$L_"+str(self.idx)+"$, "
+        s2=self.iblock(p)+"${"+istr+"}$"
+        return (s1+s2)
 
 
 class Motor(Componant):
@@ -79,14 +93,14 @@ class Motor(Componant):
         clist=[ 1000+200*i for i in range(1,19)]
         self.I=random.choice(clist)
 
-    def circuitikz(self):
+    def circuitikz(self,p):
         if (not self.ukn):
             istr=self.i_label+"=\SI{"+str(self.I)+"}{\mA}"
         else:
             istr=self.i_label
-        s1="rmeter, t={\\textbf M}"
-        s2="${"+istr+"}$"
-        return (s1,s2)
+        s1="rmeter, t={\\textbf M}, "
+        s2=self.iblock(p)+"${"+istr+"}$"
+        return (s1+s2)
 
 class Circuit:
     def __init__(self,level):
@@ -104,7 +118,7 @@ class Circuit:
             self.components=([Generator(),Lamp(),Motor()])
             random.shuffle(self.components)
             ukn=random.randint(0, 2)
-        i_label=["I_1","I_2","I_3"]
+        i_label=["i_1","i_2","i_3"]
         random.shuffle(i_label)
         for i in range(3):
             self.components[i].set_i_label(i_label[i])
@@ -122,14 +136,17 @@ class Circuit:
 
     def circuitikz(self):
         sl=[]
+        i=0
         for c in self.components:
-            (x1,x2)=c.circuitikz()
-            sl.append(x1)
-            sl.append(x2)
+            x=c.circuitikz(i)
+            i+=1
+            sl.append(x)
+            #sl.append(x2)
             if (c.ukn):
                 s=get_random_string(5)+str(c.I)+get_random_string(5)
                 s=str(c.I)
-        return (sl[0],sl[1],sl[2],sl[3],sl[4],sl[5],s)
+                il=c.i_label
+        return (sl[0],sl[1],sl[2],il,s)
 
     def sum_I(self):
         s=0
@@ -211,18 +228,16 @@ def generates_student_file(e):
     fi=open("latextemplate.tex","rt")
     fo=open(eleve2filename(e),"wt")
     c=Circuit(e.phynote)
-    (a1,a2,b1,b2,c1,c2,sl)=c.circuitikz()
+    (a,b,c,il,sl)=c.circuitikz()
     for line in fi.readlines():
         line=line.replace("@PRENOM@",e.prenom)
         line=line.replace("@NOM@",e.nom)
         line=line.replace("@CLASS@",cl[0])
         line=line.replace("@CLNB@",cl[1])
-        line=line.replace("@A1@",a1)
-        line=line.replace("@A2@",a2)
-        line=line.replace("@B1@",b1)
-        line=line.replace("@B2@",b2)
-        line=line.replace("@C1@",c1)
-        line=line.replace("@C2@",c2)
+        line=line.replace("@A@",a)
+        line=line.replace("@B@",b)
+        line=line.replace("@C@",c)
+        line=line.replace("@IL@",il)
         line=line.replace("@SOLSTRING@",sl)
         fo.write(line)
     fo.close()

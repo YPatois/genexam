@@ -39,11 +39,11 @@
  \draw (0,3) -- (4,3);
 %% [ yMotor=$M$, i_>=${I_1=\SI{3200}{\mA}}$, o-o]
  \draw (0,0)
- to [rmeter, t={\textbf M}, i=$i$, o-o] (0,3);
+ to [rmeter, t={\textbf M}, i_<=$i$, o-o] (0,3);
  \draw (2,0)
  to [ lamp=$L_0$, i<_=${I_2=\SI{120}{\mA}}$, o-o]  (2,3);
  \draw (4,0)
- to [ american voltage source, invert, , i^<=${I_3}$, o-o]  (4,3);
+ to [ american voltage source, invert, , i^>=${I_3}$, o-o]  (4,3);
 \end{circuitikz}
 
 \end{wrapfigure}
