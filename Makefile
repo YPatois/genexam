@@ -5,7 +5,7 @@ PDFS = $(patsubst outdir/tex/%.tex, outdir/pdf/%.pdf, $(TEXES))
 all: outdir/out_4_3.pdf outdir/out_4_4.pdf outdir/out_4_5.pdf
 
 outdir/tex/%.tex: genexam.py latextemplate.tex Makefile
-	./genexam.py
+	./genesmallexam.py
 
 
 .PRECIOUS: outdir/pdf/%.pdf
