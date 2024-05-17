@@ -171,7 +171,7 @@ def item2fn(item):
     return item.lower().replace(' ','_').replace('-','_')
 
 def eleve2filename(e):
-    return os.path.join(OUTDIR,item2fn(e.nom)+'_'+item2fn(e.prenom)+".tex")
+    return os.path.join(OUTDIR,e.cid+'_'+item2fn(e.nom)+'_'+item2fn(e.prenom)+".tex")
 
 def replace_braces(s):
     s=s.replace('@','{')
@@ -279,11 +279,11 @@ def main():
     #return
 
     lc=LesClasses(lesclasses,False)
-    cid="4_3"
-    a_class=lc.getClasse(cid)
-    for e in a_class.eleves:
-        generates_student_file(e)
-        #return
+    for cid in ["4_3","4_4","4_5"]:
+        a_class=lc.getClasse(cid)
+        for e in a_class.eleves:
+            generates_student_file(e)
+            #return
 
 # --------------------------------------------------------------------------
 if __name__ == '__main__':

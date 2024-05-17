@@ -4,7 +4,7 @@ import glob
 
 OUTDIR="./outdir/"
 
-OUTFILE=os.path.join(OUTDIR,"out.tex")
+#OUTFILE=os.path.join(OUTDIR,"out.tex")
 
 
 
@@ -33,21 +33,27 @@ def print_list(pl):
     return s # removing last comma
 
 
-# --------------------------------------------------------------------------
-# Welcome to Derry, Maine
-# --------------------------------------------------------------------------
-def main():
-    pdflist=glob.glob(os.path.join(OUTDIR,"pdf","*.pdf"))
+def doit(cid):
+    pdflist=glob.glob(os.path.join(OUTDIR,"pdf",cid+"*.pdf"))
+    print (os.path.join(OUTDIR,"pdf",cid+"*.pdf"))
     pdflist.sort()
-    #print(pdflist)
+    print(pdflist)
     fi=open("mergetemplate.tex","rt")
-    fo=open(OUTFILE,"wt")
+    fo=open(os.path.join(OUTDIR,"out_"+cid+".tex"),"wt")
     for line in fi.readlines():
         if "@PDFLIST@" in line:
             line=line.replace("@PDFLIST@",print_list(pdflist))
         fo.write(line)
     fo.close()
     fi.close()
+
+
+# --------------------------------------------------------------------------
+# Welcome to Derry, Maine
+# --------------------------------------------------------------------------
+def main():
+    for cid in ["4_3","4_4","4_5"]:
+        doit(cid)
 
 # --------------------------------------------------------------------------
 if __name__ == '__main__':
